@@ -32,12 +32,33 @@ class Brain():
         """
         return 'jarvis' in text.lower()
 
+    def _preprocess(self, text):
+        """
+        Pre-processes the text.
+
+        1) Changes to lower-case.
+        So we don't have to look for "Word" as well as "word".
+
+        2) Removes the first "Jarvis" occurence in the text.
+        This avoids to leads to some weirdness like:
+        "Jarvis, what's your name?"
+        Or like that:
+        "Jarvis, your name is Jarvis."
+        """
+        # 1)
+        text = text.lower()
+        # 2)
+        text = text.replace("jarvis", "", 1)
+        print "text:", text
+        return text
+
     def process(self, text):
         speak_engine = self.speak_engine
         if not self.talking_to_me(text):
             print("Not talking to me.")
             return True
-        words = text.lower().split(' ')
+        text = self._preprocess(text)
+        words = text.split(' ')
         if 'open' in words:
             speak_engine.say("I'm on it. Stand By.")
             websites = config["config"]["websites"]
