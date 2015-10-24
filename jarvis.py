@@ -44,6 +44,10 @@ def sleep():
 
 
 def wakeup():
+    with speech_recognition.Microphone() as source:
+        tts_engine.say("A moment of silence, please.")
+        # listens for 1 second to calibrate the energy threshold for ambient noise levels
+        recognizer.adjust_for_ambient_noise(source)
     while not exit_flag:
         # _, s_data = mic.listen()
         # if mic.is_silent(s_data):
