@@ -31,9 +31,10 @@ def check_sleep(words):
 def sleep():
     while not exit_flag:
         try:
-            _, s_data = mic.listen()
-            stt_engine = google_stt.Google_STT(mic)
-            stt_response = stt_engine.get_text()
+            with speech_recognition.Microphone() as source:
+                print("Say something!")
+                audio = recognizer.listen(source)
+            stt_response = recognizer.recognize_google(audio)
             words_stt_response = stt_response.split(' ')
             if 'wake' in words_stt_response or 'jarvis' in words_stt_response or 'wakeup' in words_stt_response:
                 tts_engine.say("Hello Sir, I am back once again.")
