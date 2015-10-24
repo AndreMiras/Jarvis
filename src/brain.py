@@ -108,4 +108,37 @@ class Brain():
                 speak_engine.say(
                     "Perhaps my Mathematical part of brain is malfunctioning.")
             return True
+        if self.process_lights(text):
+            return True
         return False
+
+    def process_lights(self, text):
+        """
+        Handles light commands with Philips Hue.
+        """
+        speak_engine = self.speak_engine
+        words = text.split(' ')
+        # looks in text so 'light' and 'lights' would match
+        if 'light' in text:
+            if 'dim' in words or 'full' in words or 'turn' in words or 'switch' in words:
+                if 'full' in words or 'on' in words:
+                    brightness = 255
+                    on = True
+                    speak_engine.say("OK, I'll switch the lights on for you.")
+                elif 'dim' in words:
+                    brightness = 127
+                    on = True
+                    speak_engine.say("OK, I'll dim the lights for you.")
+                elif 'off' in words:
+                    brightness = 0
+                    on = False
+                    speak_engine.say("OK, I'll switch the lights off for you.")
+                from phue import Bridge
+                # will guess the IP if none is given
+                ip_address = None
+                bridge = Bridge(ip_address)
+                lights_dict = bridge.get_light_objects('name')
+                for name, light in lights_dict.items():
+                    light.brightness = brightness
+                    light.on = on
+                return True
