@@ -71,6 +71,5 @@ class Pyttsx(ITextToSpeech):
         self.engine = pyttsx.init()
 
     def say(self, text):
-        print("Pyttsx says: %s" % text)
         self.engine.say(text)
         self.engine.runAndWait()

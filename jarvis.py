@@ -12,7 +12,7 @@ from excp.exception import NotUnderstoodException
 
 exit_flag = 0
 tts_engine = google_tts.Pyttsx()
-jarvis_brain = brain.Brain()
+jarvis_brain = brain.Brain(tts_engine)
 # mic = microphone.Microphone()
 k = aiml.Kernel()
 recognizer = speech_recognition.Recognizer()

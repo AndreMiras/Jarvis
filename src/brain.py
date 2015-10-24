@@ -13,8 +13,6 @@ from src.some_functions import *
 from src import common
 
 
-speak_engine = google_tts.Google_TTS()
-
 with open('config.yml', 'r') as f:
     config = yaml.load(f)
 
@@ -25,7 +23,11 @@ class Brain():
     This class will load core things in Jarvis' brain
     '''
 
+    def __init__(self, speak_engine):
+        self.speak_engine = speak_engine
+
     def process(self, text):
+        speak_engine = self.speak_engine
         words = text.lower().split(' ')
         if 'open' in words:
             speak_engine.say("I'm on it. Stand By.")
@@ -48,6 +50,7 @@ class Brain():
             return True
         if 'play' in words:
             if 'a' in words and 'song' in words:
+                speak_engine.say("I'm looking for it. Please stand by!")
                 thread.start_new_thread(play_music, ())
             return True
         if 'current' in words and 'time' in words:
