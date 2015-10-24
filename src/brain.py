@@ -25,8 +25,20 @@ class Brain():
     def talking_to_me(self, text):
         """
         Returns True if talking to me, otherwise returns False.
+        1) If Jarvis is found somewhere in the sentence.
+        2) If "OK" or "Okay" is found in the beginning of the sentence.
+        Sometimes it better understands these words than its name.
         """
-        return 'jarvis' in text.lower()
+        result = False
+        # 1) If Jarvis is found somewhere in the sentence.
+        result |= 'jarvis' in text.lower()
+        # 2) If "OK" or "Okay" is found in the beginning of the sentence.
+        words = text.split(" ")
+        first_word = words[0]
+        result |= first_word == 'okay'
+        result |= first_word == 'ok'
+        return result
+
 
     def _preprocess(self, text):
         """
@@ -41,11 +53,10 @@ class Brain():
         Or like that:
         "Jarvis, your name is Jarvis."
         """
-        # 1)
+        # 1) Changes to lower-case.
         text = text.lower()
-        # 2)
+        # 2) Removes the first "Jarvis" occurence in the text.
         text = text.replace("jarvis", "", 1)
-        print "text:", text
         return text
 
     def process(self, text):
