@@ -16,6 +16,7 @@ class ITextToSpeech(object):
     def say(self, text):
         pass
 
+
 class Google_TTS(ITextToSpeech):
 
     """
@@ -58,3 +59,18 @@ class Google_TTS(ITextToSpeech):
         Plays given wav file using a terminal software called aplay.
         """
         os.system(PLAYER % (filename,))
+
+
+class Pyttsx(ITextToSpeech):
+    """
+    Implements ITextToSpeech using pyttsx library.
+    """
+
+    def __init__(self):
+        import pyttsx
+        self.engine = pyttsx.init()
+
+    def say(self, text):
+        print("Pyttsx says: %s" % text)
+        self.engine.say(text)
+        self.engine.runAndWait()
