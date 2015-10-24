@@ -5,7 +5,6 @@ import traceback
 import speech_recognition
 
 from src import google_tts
-from src import microphone
 from src import commonsense
 from src import brain
 from excp.exception import NotUnderstoodException
@@ -24,6 +23,7 @@ def check_sleep(words):
         sleep()
     if ('shut' in words and 'down' in words) or 'bye' in words or 'goodbye' in words:
         tts_engine.say("I am shutting down")
+        global exit_flag
         exit_flag = 1
         return True
 
@@ -46,7 +46,7 @@ def sleep():
 def wakeup():
     with speech_recognition.Microphone() as source:
         tts_engine.say("A moment of silence, please.")
-        # listens for 1 second to calibrate the energy threshold for ambient noise levels
+        # listens to calibrate the energy threshold for ambient noise levels
         recognizer.adjust_for_ambient_noise(source)
     while not exit_flag:
         # _, s_data = mic.listen()
