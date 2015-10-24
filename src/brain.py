@@ -1,15 +1,11 @@
 import re
 import webbrowser
-import os
-import random
-import urllib
 import thread
 import yaml
 
-from src import google_tts
 from src.wikipedia import wikipedia
 from src import network
-from src.some_functions import *
+from src.some_functions import words_to_nums, play_music
 from src import common
 
 
