@@ -26,8 +26,17 @@ class Brain():
     def __init__(self, speak_engine):
         self.speak_engine = speak_engine
 
+    def talking_to_me(self, text):
+        """
+        Returns True if talking to me, otherwise returns False.
+        """
+        return 'jarvis' in text.lower()
+
     def process(self, text):
         speak_engine = self.speak_engine
+        if not self.talking_to_me(text):
+            print("Not talking to me.")
+            return True
         words = text.lower().split(' ')
         if 'open' in words:
             speak_engine.say("I'm on it. Stand By.")
