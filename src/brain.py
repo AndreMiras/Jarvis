@@ -146,6 +146,6 @@ class Brain():
                 bridge = Bridge(ip_address)
                 lights_dict = bridge.get_light_objects('name')
                 for name, light in lights_dict.items():
-                    light.brightness = brightness
                     light.on = on
+                    light.brightness = brightness
                 return True
