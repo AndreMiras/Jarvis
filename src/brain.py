@@ -30,8 +30,9 @@ class Brain():
         Sometimes it better understands these words than its name.
         """
         result = False
+        text = text.lower()
         # 1) If Jarvis is found somewhere in the sentence.
-        result |= 'jarvis' in text.lower()
+        result |= 'jarvis' in text
         # 2) If "OK" or "Okay" is found in the beginning of the sentence.
         words = text.split(" ")
         first_word = words[0]
@@ -127,7 +128,8 @@ class Brain():
         words = text.split(' ')
         # looks in text so 'light' and 'lights' would match
         if 'light' in text:
-            if 'dim' in words or 'full' in words or 'turn' in words or 'switch' in words:
+            match_list =  ['dim', 'full', 'turn', 'switch', 'on', 'off']
+            if len(set(match_list).intersection(set(words))) > 0:
                 if 'full' in words or 'on' in words:
                     brightness = 255
                     on = True
@@ -140,6 +142,9 @@ class Brain():
                     brightness = 0
                     on = False
                     speak_engine.say("OK, I'll switch the lights off for you.")
+                else:
+                    # only understood the word switch in the sentence
+                    return True
                 from phue import Bridge
                 # will guess the IP if none is given
                 ip_address = None
